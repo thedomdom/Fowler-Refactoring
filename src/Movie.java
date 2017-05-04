@@ -1,27 +1,24 @@
 public class Movie {
-    public static final int CHILDRENS = 2;
-    public static final int REGULAR = 0;
-    public static final int NEW_RELEASE = 1;
     private String title;
-    private int priceCode;
+    private Price price;
 
     public Movie(String title, int priceCode) {
         this.title = title;
-        this.priceCode = priceCode;
+        setPrice(priceCode);
     }
 
     double getCharge(int daysRented) {
         double charge = 0;
-        switch (priceCode) {
-            case Movie.REGULAR:
+        switch (price) {
+            case REGULAR:
                 charge += 2;
                 if (daysRented > 2)
                     charge += (daysRented - 2) * 1.5;
                 break;
-            case Movie.NEW_RELEASE:
+            case NEW_RELEASE:
                 charge += daysRented * 3;
                 break;
-            case Movie.CHILDRENS:
+            case CHILDRENS:
                 charge += 1.5;
                 if (daysRented > 3)
                     charge += (daysRented - 3) * 1.5;
@@ -32,16 +29,16 @@ public class Movie {
 
     public int getFrequentRenterPoints(int daysRented) {
         // add bonus for a two day new release rental
-        if ((priceCode == Movie.NEW_RELEASE) && daysRented > 1) return 2;
+        if ((price == Price.NEW_RELEASE) && daysRented > 1) return 2;
         return 1;
     }
 
     public int getPriceCode() {
-        return priceCode;
+        return price.ordinal();
     }
 
-    public void setPriceCode(int priceCode) {
-        this.priceCode = priceCode;
+    public void setPrice(int priceCode) {
+        this.price = Price.values()[priceCode];
     }
 
     public String getTitle() {
